@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024-2025学年第一学期课程表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        h1 {
+            font-size: large;
+        }
+        h2 {
+            font-size: small;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .time-slot {
+            font-weight: bold;
+            background-color: #e9e9e9;
+        }
+        .week-nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .week-nav button {
+            margin: 0 10px;
+            padding: 5px 10px;
+        }
+        /* 高亮今天的列 */
+        .highlight-today {
+            background-color: #ffeb3b;
+        }
+        /* 移动端样式 */
+        @media (max-width: 768px) {
+            table {
+                table-layout: fixed;
+            }
+            td, th {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>2024-2025学年第一学期课程表</h1>
+    <h2>一年制24秋季三副班（临港校区）</h2>
+    
+    <div id="schedules">
+        <!-- 这里将通过JavaScript动态生成每周的课程表 -->
+    </div>
+
+    <div class="week-nav">
+        <button onclick="changeWeek(-1)">上一周</button>
+        <span id="currentWeek"></span>
+        <button onclick="changeWeek(1)">下一周</button>
+    </div>
+
+    <script>
+        const courseSchedule = {
+            "航海学上": {
+                "teacher": "沈淳",
+                "schedule": {
+                    "Monday_AM": { 
+                        "weeks": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "location": "3D208" 
+                    },
+                    "Tuesday_PM": {
+                        "weeks": [4, 5, 6, 7, 8, 9, 10], "location": "3B105"
+                    },
+                    "Saturday_AM": {
+                        "weeks": [6, 7, 8, 9, 10, 11, 13, 14, 15, 16], "location": "2A101"
+                    }
+                }
+            },
+            "船舶管理上": {
+                "teacher": "赵观洋",
+                "schedule": {
+                    "Monday_AM": { 
+                        "weeks": [15, 16, 17], "location": "3D208" 
+                    },
+                    "Monday_PM": { 
+                        "weeks": [15, 16, 17], "location": "3D208"
+                    },
+                    "Friday_AM": { 
+                        "weeks": [17], "location": "1A202"
+                    },
+                    "Friday_PM": { 
+                        "weeks": [5, 6, 7, 8, 9, 14, 15, 16, 17], "location": "2A103"
+                    },
+                }
+            },
+            "船舶操纵上": {
+                "teacher": "董文海",
+                "schedule": {
+                    "Monday_PM": { 
+                        "weeks": [3, 4, 5], "location": "3D208" 
+                    },
+                    "Monday_EVE": { 
+                        "weeks": [6, 7], "location": "3A101"
+                    },
+                    "Wednesday_PM": {
+                        "weeks": [9, 11, 13, 15, 17], "location": "1A303" 
+                    },
+                    "Wednesday_PM": {
+                        "weeks": [10, 12, 14, 16], "location": "1A301" 
+                    }
+                }
+            },
+            "船舶避碰上": {
+                "teacher": "罗捷",
+                "schedule": {
+                    "Monday_PM": { 
+                        "weeks": [6, 7, 8, 9, 10, 11, 12, 13, 14], "location": "3D208" 
+                    },
+                    "Tuesday_EVE": { 
+                        "weeks": [3, 4, 5, 6], "location": "2B501"
+                    }
+                }
+            },
+            "航海气象与海洋学上": {
+                "teacher": "陈利雄",
+                "schedule": {
+                    "Tuesday_AM": { 
+                        "weeks": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "location": "1A302" 
+                    }
+                }
+            },
+            "航海英语上": {
+                "teacher": "魏耀明",
+                "schedule": {
+                    "Tuesday_PM": { 
+                        "weeks": [11, 12, 13, 14, 15, 16, 17], "location": "3B105" 
+                    },
+                    "Thursday_PM": { 
+                        "weeks": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "location": "商船A113" 
+                    },
+                    "Thursday_EVE": { 
+                        "weeks": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "location": "3A101" 
+                    },
+                }
+            },
+            "船舶货运": {
+                "teacher": "薛孝行",
+                "schedule": {
+                    "Wednesday_AM": { 
+                        "weeks": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "location": "商船G107" 
+                    },
+                    "Wednesday_PM": {
+                        "weeks": [5, 7], "location": "1A303" 
+                    },
+                    "Wednesday_PM": {
+                        "weeks": [4, 6, 8], "location": "1A301" 
+                    }
+                }
+            },
+            "航海仪器（含雷达）上": {
+                "teacher": "刘德荣",
+                "schedule": {
+                    "Thursday_AM": { 
+                        "weeks": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "location": "商船G107" 
+                    },
+                }
+            },
+            "船舶结构与设备": {
+                "teacher": "伍生春",
+                "schedule": {
+                    "Friday_AM": { 
+                        "weeks": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "location": "1A202" 
+                    },
+                }
+            },
+            "海员第一课": {
+                "teacher": "未知",
+                "schedule": {
+                    "Monday_AM": { 
+                        "weeks": [3], "location": "3D208" 
+                    },
+                }
+            }
+        };
+
+        const semesterStart = new Date('2024-09-09'); // 假设学期从2024年9月9日开始
+        let currentWeek = 3;
+        const totalWeeks = 17;
+
+        function getCurrentWeek() {
+            const today = new Date();
+            const diffTime = Math.abs(today - semesterStart);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return Math.ceil(diffDays / 7);
+        }
+
+        // 检查当前屏幕是否为窄屏
+        function isNarrowScreen() {
+            return window.innerWidth <= 768;
+        }
+
+        // 生成表格，横屏与竖屏分别处理
+        function generateWeeklySchedule(week) {
+            const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const timeSlots = ["AM", "PM", "EVE"];
+            const dayTranslations = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+            const slotTranslations = ["上午", "下午", "晚上"];
+
+            // 计算这一周的日期
+            const startOfWeek = new Date(semesterStart);
+            startOfWeek.setDate(semesterStart.getDate() + (week - 1) * 7);
+            const datesOfWeek = daysOfWeek.map((_, index) => {
+                const day = new Date(startOfWeek);
+                day.setDate(startOfWeek.getDate() + index);
+                return `${day.getMonth() + 1}月${day.getDate()}日`;
+            });
+
+            const today = new Date();
+            const todayIndex = today.getDay() - 1;
+            const validTodayIndex = todayIndex >= 0 && todayIndex < 6 ? todayIndex : -1;
+
+            let scheduleHTML = "";
+
+            if (isNarrowScreen()) {
+                // 窄屏模式下，将行和列反转，时间段作为列，星期几作为行
+                scheduleHTML += `<table>
+                    <tr>
+                        <th>星期</th>
+                        ${slotTranslations.map(slot => `<th>${slot}</th>`).join('')}
+                    </tr>`;
+
+                daysOfWeek.forEach((day, dayIndex) => {
+                    scheduleHTML += `<tr><td class="time-slot">${dayTranslations[dayIndex]}<br>${datesOfWeek[dayIndex]}</td>`;
+                    timeSlots.forEach((slot, index) => {
+                        let cellContent = "";
+                        for (let [course, details] of Object.entries(courseSchedule)) {
+                            const scheduleForSlot = details.schedule[`${day}_${slot}`];
+                            if (scheduleForSlot && scheduleForSlot.weeks.includes(week)) {
+                                cellContent += `${course}<br>${details.teacher}<br>${scheduleForSlot.location}<br>`;
+                            }
+                        }
+                        const highlightClass = dayIndex === validTodayIndex ? 'highlight-today' : '';
+                        scheduleHTML += `<td class="${highlightClass}">${cellContent}</td>`;
+                    });
+                    scheduleHTML += "</tr>";
+                });
+
+                scheduleHTML += "</table>";
+            } else {
+                // 宽屏模式下，保持原始表格布局
+                scheduleHTML += `<table>
+                    <tr>
+                        <th>时间</th>
+                        ${dayTranslations.map((day, index) => {
+                            const highlightClass = index === validTodayIndex ? 'highlight-today' : '';
+                            return `<th class="${highlightClass}">${day}<br>${datesOfWeek[index]}</th>`;
+                        }).join('')}
+                    </tr>`;
+
+                timeSlots.forEach((slot, index) => {
+                    scheduleHTML += `<tr><td class="time-slot">${slotTranslations[index]}</td>`;
+                    daysOfWeek.forEach((day, dayIndex) => {
+                        let cellContent = "";
+                        for (let [course, details] of Object.entries(courseSchedule)) {
+                            const scheduleForSlot = details.schedule[`${day}_${slot}`];
+                            if (scheduleForSlot && scheduleForSlot.weeks.includes(week)) {
+                                cellContent += `${course}<br>${details.teacher}<br>${scheduleForSlot.location}<br>`;
+                            }
+                        }
+                        const highlightClass = dayIndex === validTodayIndex ? 'highlight-today' : '';
+                        scheduleHTML += `<td class="${highlightClass}">${cellContent}</td>`;
+                    });
+                    scheduleHTML += "</tr>";
+                });
+
+                scheduleHTML += "</table>";
+            }
+
+            return scheduleHTML;
+        }
+
+        function updateSchedule() {
+            document.getElementById('schedules').innerHTML = generateWeeklySchedule(currentWeek);
+            document.getElementById('currentWeek').textContent = `第${currentWeek}周`;
+        }
+
+        function changeWeek(delta) {
+            currentWeek += delta;
+            if (currentWeek < 3) currentWeek = 3;
+            if (currentWeek > totalWeeks) currentWeek = totalWeeks;
+            updateSchedule();
+        }
+
+        window.onresize = updateSchedule;  // 屏幕大小变化时，重新生成表格
+
+        // 初始化当前周次
+        currentWeek = getCurrentWeek();
+        if (currentWeek < 3) currentWeek = 3;
+        if (currentWeek > totalWeeks) currentWeek = totalWeeks;
+
+        updateSchedule();
+    </script>
+</body>
+</html>
